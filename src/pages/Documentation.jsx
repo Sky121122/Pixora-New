@@ -2,8 +2,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import { Mascot } from 'pixora-mascot';
-import 'pixora-mascot/style.css';
 import './Documentation.css';
 
 const installCode = 'npm install pixora-mascot';
@@ -19,7 +17,6 @@ function App() {
     <div>
       <Mascot
         directions="/mascots/cat-directions.webp"
-        expressions="/mascots/cat-expressions.webp"
         size={150}
       />
     </div>
@@ -33,31 +30,13 @@ const props = [
     name: 'directions',
     type: 'string',
     defaultValue: 'undefined',
-    description: 'URL of the 3×3 direction sprite sheet. Allows the mascot to follow the cursor.',
-  },
-  {
-    name: 'expressions',
-    type: 'string',
-    defaultValue: 'undefined',
-    description: 'URL of the 3×3 expression sprite sheet. Clicking the mascot changes its expression.',
-  },
-  {
-    name: 'expressionFrames',
-    type: 'number[]',
-    defaultValue: '[0,1,2,3,4,5,6,7,8]',
-    description: 'Controls the order in which expression frames are displayed when clicked.',
+    description: 'URL of the 3×3 direction sprite sheet. Allows the mascot to follow the cursor across the screen.',
   },
   {
     name: 'size',
     type: 'number',
     defaultValue: '120',
     description: 'Sets the mascot width and height in pixels.',
-  },
-  {
-    name: 'expressionDuration',
-    type: 'number',
-    defaultValue: '1200',
-    description: 'How long an expression stays visible before returning to the normal frame, in milliseconds.',
   },
 ];
 
@@ -82,6 +61,7 @@ function CodeBlock({ code, language = 'jsx' }) {
           {copied ? 'Copied!' : 'Copy code'}
         </button>
       </div>
+
       <pre>
         <code>{code}</code>
       </pre>
@@ -111,8 +91,12 @@ function Documentation() {
         </aside>
 
         <main className="docs-content">
+
+          {/* INTRODUCTION */}
           <section id="introduction" className="docs-section docs-intro">
-            <span className="docs-eyebrow">PIXORA MASCOT · DOCUMENTATION</span>
+            <span className="docs-eyebrow">
+              PIXORA MASCOT · DOCUMENTATION
+            </span>
 
             <h1>
               Bring your website
@@ -123,13 +107,14 @@ function Documentation() {
             <p>
               Pixora Mascot is a lightweight React component that adds
               interactive sprite-based characters to your applications.
-              Let your mascots follow the cursor and react to clicks.
+              Your mascots follow the cursor wherever it moves across the screen.
             </p>
 
             <div className="docs-intro-actions">
               <a href="#installation" className="docs-primary-btn">
                 Get Started ↘
               </a>
+
               <a
                 href="https://www.npmjs.com/package/pixora-mascot"
                 target="_blank"
@@ -141,15 +126,18 @@ function Documentation() {
             </div>
 
             <div className="docs-feature-row">
-              <span>✦ Cursor interaction</span>
-              <span>✦ Click expressions</span>
+              <span>✦ Cursor tracking</span>
+              <span>✦ 9 directions</span>
               <span>✦ Custom sprites</span>
             </div>
           </section>
 
+          {/* INSTALLATION */}
           <section id="installation" className="docs-section">
             <span className="docs-number">01 — INSTALLATION</span>
+
             <h2>Install Pixora Mascot</h2>
+
             <p>
               Open your React project terminal and install the package
               using npm.
@@ -165,6 +153,7 @@ function Documentation() {
             </div>
 
             <h3>Import the component</h3>
+
             <p>
               In the React file where you want to use your mascot,
               import the component and its stylesheet.
@@ -173,12 +162,15 @@ function Documentation() {
             <CodeBlock code={importCode} />
           </section>
 
+          {/* QUICK START */}
           <section id="quick-start" className="docs-section">
             <span className="docs-number">02 — QUICK START</span>
+
             <h2>Your first mascot</h2>
+
             <p>
-              Create a mascot by providing its direction and expression
-              sprite sheet URLs.
+              Create a mascot by providing its 3×3 direction sprite sheet.
+              The mascot automatically follows the cursor across the screen.
             </p>
 
             <CodeBlock code={usageCode} />
@@ -186,17 +178,19 @@ function Documentation() {
             <div className="docs-tip">
               <strong>Important</strong>
               <p>
-                Put your sprite images inside your project's
+                Put your sprite image inside your project's
                 <code> public/mascots/ </code> folder. Use paths beginning
                 with <code>/mascots/</code> in your component.
               </p>
             </div>
           </section>
 
-
+          {/* COMPONENT PROPS */}
           <section id="props" className="docs-section">
-            <span className="docs-number">04 — COMPONENT PROPS</span>
+            <span className="docs-number">03 — COMPONENT PROPS</span>
+
             <h2>Customize your mascot</h2>
+
             <p>
               Use these props to control the appearance and behaviour
               of your mascot.
@@ -215,6 +209,7 @@ function Documentation() {
                     <code>{prop.name}</code>
                     <p>{prop.description}</p>
                   </div>
+
                   <span>{prop.type}</span>
                   <code>{prop.defaultValue}</code>
                 </div>
@@ -222,8 +217,10 @@ function Documentation() {
             </div>
           </section>
 
+          {/* TROUBLESHOOTING */}
           <section id="troubleshooting" className="docs-section">
-            <span className="docs-number">06 — TROUBLESHOOTING</span>
+            <span className="docs-number">04 — TROUBLESHOOTING</span>
+
             <h2>Having trouble?</h2>
 
             <div className="docs-faq">
@@ -238,15 +235,16 @@ function Documentation() {
               <h3>The mascot does not follow my cursor.</h3>
               <p>
                 Make sure you have provided a valid directions sprite
-                sheet. Cursor interaction is unavailable without it.
+                sheet. Cursor tracking requires a valid direction sheet.
               </p>
             </div>
 
             <div className="docs-faq">
-              <h3>Clicking does not change the expression.</h3>
+              <h3>My mascot shows the wrong direction.</h3>
               <p>
-                Check that the expressions prop points to a valid
-                expression sprite sheet.
+                Make sure your sprite sheet follows the correct 3×3
+                direction layout: top-left, top, top-right, left,
+                front, right, bottom-left, down and bottom-right.
               </p>
             </div>
 
@@ -260,6 +258,7 @@ function Documentation() {
             </div>
           </section>
 
+          {/* BOTTOM CTA */}
           <section className="docs-bottom-cta">
             <span>READY TO BUILD SOMETHING FUN?</span>
             <h2>Give your website a little personality.</h2>
@@ -270,6 +269,7 @@ function Documentation() {
             <span>© 2026 PIXORA MASCOT</span>
             <Link to="/">Back to home ↑</Link>
           </footer>
+
         </main>
       </div>
     </div>

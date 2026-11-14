@@ -1,52 +1,27 @@
 
-import { useEffect, useRef, useState } from 'react';
 import MascotSprite from './MascotSprite';
 
-function InteractiveMascot({ mascot, cursor, expressionStep }) {
-  const mascotRef = useRef(null);
-  const [directionFrame, setDirectionFrame] = useState(4);
+function InteractiveMascot({ mascot, cursor }) {
+  const cursorEnabled = mascot.interaction?.cursorEnabled !== false;
 
-  const cursorEnabled =
-    mascot.interaction?.cursorEnabled !== false;
+  let directionFrame = 4;
 
-  const expressionFrames = mascot.expressionFrames || [
-    0, 1, 2, 3, 4, 5, 6, 7, 8,
-  ];
-
-  const showingExpression =
-    expressionStep !== null && expressionStep !== undefined;
-
-  useEffect(() => {
-    if (!cursorEnabled || !cursor || !mascotRef.current) {
-      setDirectionFrame(4);
-      return;
-    }
-
-    const rect = mascotRef.current.getBoundingClientRect();
-
-    const x = (cursor.x - rect.left) / rect.width;
-    const y = (cursor.y - rect.top) / rect.height;
+  if (cursorEnabled && cursor) {
+    const x = cursor.x / window.innerWidth;
+    const y = cursor.y / window.innerHeight;
 
     const column = x < 0.33 ? 0 : x > 0.67 ? 2 : 1;
     const row = y < 0.33 ? 0 : y > 0.67 ? 2 : 1;
 
-    setDirectionFrame(row * 3 + column);
-  }, [cursor, cursorEnabled]);
-
-  const currentFrame = showingExpression
-    ? expressionFrames[expressionStep % expressionFrames.length]
-    : directionFrame;
-
-  const currentType = showingExpression
-    ? 'expressions'
-    : 'directions';
+    directionFrame = row * 3 + column;
+  }
 
   return (
-    <div className="interactive-mascot" ref={mascotRef}>
+    <div className="interactive-mascot">
       <MascotSprite
         mascot={mascot}
-        type={currentType}
-        frameIndex={currentFrame}
+        type="directions"
+        frameIndex={directionFrame}
         size={130}
       />
     </div>

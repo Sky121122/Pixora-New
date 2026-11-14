@@ -45,21 +45,14 @@ function MascotModal({ mascot, onClose }) {
   const mascotSlug = mascot.name.toLowerCase().replace(/\s+/g, '-');
 
   const copyCode = async () => {
-    const directions = mascot.assets?.directions
-      ? `  directions="/mascots/${mascotSlug}-directions.webp",\n`
-      : '';
-
-    const expressions = mascot.assets?.expressions
-      ? `  expressions="/mascots/${mascotSlug}-expressions.webp",\n`
-      : '';
-
     const code = `import { Mascot } from 'pixora-mascot';
 import 'pixora-mascot/style.css';
 
 function App() {
   return (
     <Mascot
-${directions}${expressions}      size={240}
+      directions="/mascots/${mascotSlug}-directions.webp"
+      size={240}
     />
   );
 }
@@ -69,7 +62,6 @@ export default App;`;
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
-
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       console.error('Unable to copy code:', error);
@@ -80,21 +72,20 @@ export default App;`;
     try {
       await navigator.clipboard.writeText('npm install pixora-mascot');
       setInstallCopied(true);
-
       setTimeout(() => setInstallCopied(false), 2000);
     } catch (error) {
       console.error('Unable to copy install command:', error);
     }
   };
 
-  const downloadSprite = (type) => {
-    const file = mascot.assets?.[type];
+  const downloadSprite = () => {
+    const file = mascot.assets?.directions;
 
     if (!file) return;
 
     const link = document.createElement('a');
     link.href = file;
-    link.download = `${mascotSlug}-${type}.webp`;
+    link.download = `${mascotSlug}-directions.webp`;
 
     document.body.appendChild(link);
     link.click();
@@ -136,11 +127,6 @@ export default App;`;
           <div className="modal-character">
             <Mascot
               directions={mascot.assets?.directions}
-              expressions={mascot.assets?.expressions}
-              expressionFrames={mascot.expressionFrames}
-              expressionDuration={
-                mascot.interaction?.expressionDuration ?? 1200
-              }
               size={240}
             />
           </div>
@@ -160,25 +146,22 @@ export default App;`;
               <div className="modal-step-number">01</div>
 
               <div className="modal-step-content">
-                <h3>Download Sprite Sheets</h3>
+                <h3>Download Sprite Sheet</h3>
                 <p>
-                  Download the assets you need for your project.
+                  Download the direction sprite sheet for your project.
                 </p>
 
-                <div className="modal-download-buttons">
-                  {['directions', 'expressions'].map((type) =>
-                    mascot.assets?.[type] && (
-                      <button
-                        key={type}
-                        className="download-sprite-btn"
-                        onClick={() => downloadSprite(type)}
-                      >
-                        <Download size={16} />
-                        {type === 'directions' ? 'Directions' : 'Expressions'}
-                      </button>
-                    )
-                  )}
-                </div>
+                {mascot.assets?.directions && (
+                  <div className="modal-download-buttons">
+                    <button
+                      className="download-sprite-btn"
+                      onClick={downloadSprite}
+                    >
+                      <Download size={16} />
+                      Directions
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -195,7 +178,10 @@ export default App;`;
                 <div className="modal-command">
                   <code>npm install pixora-mascot</code>
 
-                  <button onClick={copyInstall} aria-label="Copy install command">
+                  <button
+                    onClick={copyInstall}
+                    aria-label="Copy install command"
+                  >
                     {installCopied ? <Check size={17} /> : <Copy size={17} />}
                   </button>
                 </div>
@@ -219,7 +205,11 @@ export default App;`;
                     {copied ? 'Copied' : 'Copy Code'}
                   </button>
 
-                  <Link to="/docs" className="modal-docs-link" onClick={onClose}>
+                  <Link
+                    to="/docs"
+                    className="modal-docs-link"
+                    onClick={onClose}
+                  >
                     <BookOpen size={17} />
                     Read Docs
                   </Link>

@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import InteractiveMascot from '../components/InteractiveMascot';
 import MascotModal from '../components/MascotModal';
@@ -9,66 +9,27 @@ import './MascotLibrary.css';
 function MascotLibrary() {
   const [selectedMascot, setSelectedMascot] = useState(null);
   const [cursor, setCursor] = useState(null);
-  const [expressionSteps, setExpressionSteps] = useState({});
-
-  const expressionIndices = useRef({});
-  const expressionTimers = useRef({});
-
-  const handlePointerMove = (event) => {
-    if (event.pointerType === 'touch') return;
-
-    setCursor({
-      x: event.clientX,
-      y: event.clientY,
-    });
-  };
-
-  const handleLibraryClick = () => {
-    mascots.forEach((mascot) => {
-      const canShowExpression =
-        mascot.interaction?.clickEnabled !== false &&
-        mascot.assets?.expressions;
-
-      if (!canShowExpression) return;
-
-      const frames = mascot.expressionFrames || [
-        0, 1, 2, 3, 4, 5, 6, 7, 8,
-      ];
-
-      const currentIndex = expressionIndices.current[mascot.id] || 0;
-
-      setExpressionSteps((previous) => ({
-        ...previous,
-        [mascot.id]: currentIndex,
-      }));
-
-      expressionIndices.current[mascot.id] =
-        (currentIndex + 1) % frames.length;
-
-      if (expressionTimers.current[mascot.id]) {
-        clearTimeout(expressionTimers.current[mascot.id]);
-      }
-
-      const duration =
-        mascot.interaction?.expressionDuration ?? 1200;
-
-      expressionTimers.current[mascot.id] = setTimeout(() => {
-        setExpressionSteps((previous) => {
-          const updated = { ...previous };
-          delete updated[mascot.id];
-          return updated;
-        });
-
-        delete expressionTimers.current[mascot.id];
-      }, duration);
-    });
-  };
 
   useEffect(() => {
-    return () => {
-      Object.values(expressionTimers.current).forEach((timer) => {
-        clearTimeout(timer);
+    const handlePointerMove = (event) => {
+      if (event.pointerType === 'touch') return;
+
+      setCursor({
+        x: event.clientX,
+        y: event.clientY,
       });
+    };
+
+    const handlePointerLeave = () => {
+      setCursor(null);
+    };
+
+    window.addEventListener('pointermove', handlePointerMove);
+    document.addEventListener('mouseleave', handlePointerLeave);
+
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+      document.removeEventListener('mouseleave', handlePointerLeave);
     };
   }, []);
 
@@ -76,12 +37,7 @@ function MascotLibrary() {
     <div className="mascot-library-page">
       <Header />
 
-      <main
-        className="library-container"
-        onPointerMove={handlePointerMove}
-        onPointerLeave={() => setCursor(null)}
-        onClick={handleLibraryClick}
-      >
+      <main className="library-container">
         <div className="library-heading">
           <span className="section-label">
             THE PIXORA COLLECTION
@@ -112,11 +68,6 @@ function MascotLibrary() {
                 <InteractiveMascot
                   mascot={mascot}
                   cursor={cursor}
-                  expressionStep={
-                    mascot.assets?.expressions
-                      ? expressionSteps[mascot.id]
-                      : null
-                  }
                 />
               </div>
 

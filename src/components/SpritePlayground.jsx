@@ -186,7 +186,7 @@ function SpritePlayground() {
         </div>
 
         {/* Expression Selector */}
-        <div className="frame-selector">
+        {/* <div className="frame-selector">
 
           <div className="frame-selector-heading">
             <div>
@@ -221,7 +221,7 @@ function SpritePlayground() {
             ))}
           </div>
 
-        </div>
+        </div> */}
 
       </div>
     </section>
