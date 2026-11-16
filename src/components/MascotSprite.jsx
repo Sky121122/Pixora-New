@@ -1,3 +1,4 @@
+
 import './MascotSprite.css';
 
 function MascotSprite({
@@ -5,15 +6,14 @@ function MascotSprite({
   type = 'directions',
   frameIndex = 4,
   size = 220,
+  onPointerMove,
+  onPointerLeave,
 }) {
-  // Select the required sprite sheet
   const spriteSheet = mascot?.assets?.[type];
 
-  // Calculate row and column from frame index
   const row = Math.floor(frameIndex / 3);
   const column = frameIndex % 3;
 
-  // Convert row and column into CSS percentages
   const backgroundX = column * 50;
   const backgroundY = row * 50;
 
@@ -36,15 +36,19 @@ function MascotSprite({
     <div
       className="mascot-sprite"
       role="img"
-      aria-label={`${mascot.name} ${type} animation`}
+      aria-label={`${mascot.name} ${type}`}
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
       style={{
-          width: size,
-          height: size,
-          aspectRatio: '1 / 1',
-          backgroundImage: `url("${spriteSheet}")`,
-          backgroundSize: '300% 300%',
-          backgroundPosition: `${backgroundX}% ${backgroundY}%`,
-        }}
+        width: size,
+        height: size,
+        aspectRatio: '1 / 1',
+        backgroundImage: `url("${spriteSheet}")`,
+        backgroundSize: '300% 300%',
+        backgroundPosition: `${backgroundX}% ${backgroundY}%`,
+        backgroundRepeat: 'no-repeat',
+        transition: 'none',
+      }}
     />
   );
 }

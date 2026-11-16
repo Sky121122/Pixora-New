@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import InteractiveMascot from '../components/InteractiveMascot';
 import MascotModal from '../components/MascotModal';
@@ -8,6 +8,50 @@ import './MascotLibrary.css';
 
 function MascotLibrary() {
   const [selectedMascot, setSelectedMascot] = useState(null);
+  const [cursor, setCursor] = useState(null);
+
+  useEffect(() => {
+    let animationFrame = null;
+    let latestCursor = null;
+
+    const handlePointerMove = (event) => {
+      if (event.pointerType === 'touch') return;
+
+      latestCursor = {
+        x: event.clientX,
+        y: event.clientY,
+      };
+
+      if (animationFrame !== null) return;
+
+      animationFrame = requestAnimationFrame(() => {
+        setCursor(latestCursor);
+        animationFrame = null;
+      });
+    };
+
+    const handlePointerLeave = () => {
+      if (animationFrame !== null) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = null;
+      }
+
+      latestCursor = null;
+      setCursor(null);
+    };
+
+    window.addEventListener('pointermove', handlePointerMove);
+    document.addEventListener('mouseleave', handlePointerLeave);
+
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+      document.removeEventListener('mouseleave', handlePointerLeave);
+
+      if (animationFrame !== null) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  }, []);
 
   return (
     <div className="mascot-library-page">
@@ -41,7 +85,10 @@ function MascotLibrary() {
                 className="library-card-image"
                 style={{ backgroundColor: mascot.color }}
               >
-                <InteractiveMascot mascot={mascot} />
+                <InteractiveMascot
+                  mascot={mascot}
+                  cursor={cursor}
+                />
               </div>
 
               <div className="library-card-info">

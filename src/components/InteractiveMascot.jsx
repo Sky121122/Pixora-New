@@ -1,36 +1,48 @@
 
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import MascotSprite from './MascotSprite';
 
-function InteractiveMascot({ mascot }) {
+function InteractiveMascot({ mascot, cursor }) {
   const [directionFrame, setDirectionFrame] = useState(4);
+  const mascotRef = useRef(null);
 
-  const handlePointerMove = (event) => {
-    if (event.pointerType === 'touch') return;
+  useEffect(() => {
+    if (!cursor || mascot.interaction?.cursorEnabled === false) {
+      setDirectionFrame(4);
+      return;
+    }
 
-    if (mascot.interaction?.cursorEnabled === false) return;
+    const element = mascotRef.current;
+    if (!element) return;
 
-    const rect = event.currentTarget.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
 
-    const x = (event.clientX - rect.left) / rect.width;
-    const y = (event.clientY - rect.top) / rect.height;
+    const mascotCenterX = rect.left + rect.width / 2;
+    const mascotCenterY = rect.top + rect.height / 2;
 
-    const column = x < 0.33 ? 0 : x > 0.67 ? 2 : 1;
-    const row = y < 0.33 ? 0 : y > 0.67 ? 2 : 1;
+    const deltaX = cursor.x - mascotCenterX;
+    const deltaY = cursor.y - mascotCenterY;
 
-    setDirectionFrame(row * 3 + column);
-  };
+    const thresholdX = rect.width * 0.15;
+    const thresholdY = rect.height * 0.15;
 
-  const handlePointerLeave = () => {
-    setDirectionFrame(4);
-  };
+    const column =
+      deltaX < -thresholdX ? 0 :
+      deltaX > thresholdX ? 2 : 1;
+
+    const row =
+      deltaY < -thresholdY ? 0 :
+      deltaY > thresholdY ? 2 : 1;
+
+    const nextFrame = row * 3 + column;
+
+    setDirectionFrame((previous) =>
+      previous === nextFrame ? previous : nextFrame
+    );
+  }, [cursor, mascot.interaction]);
 
   return (
-    <div
-      className="interactive-mascot"
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
-    >
+    <div className="interactive-mascot" ref={mascotRef}>
       <MascotSprite
         mascot={mascot}
         type="directions"

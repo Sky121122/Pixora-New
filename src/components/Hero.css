@@ -227,7 +227,7 @@
 
   filter: drop-shadow(5px 7px 0 rgba(0, 0, 0, 0.12));
 
-  animation: mascot-float 3s ease-in-out infinite;
+  /* animation: mascot-float 3s ease-in-out infinite; */
 }
 
 @keyframes mascot-float {

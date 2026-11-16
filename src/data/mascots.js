@@ -451,6 +451,200 @@ const mascots = [
     assets: { directions: '/mascots/avatars/zazy-girl-directions.png' },
     interaction: { cursorEnabled: true, clickEnabled: false },
   },
+
+  {
+    id: 42,
+    name: 'RacketBot',
+    category: 'Robot',
+    description: 'A sporty robot mascot with a racket-inspired personality.',
+    emoji: '🤖',
+    color: '#80ECFF',
+    tag: 'New',
+    assets: {
+      directions: '/mascots/avatars/racket-bot-directions.png',
+    },
+    interaction: {
+      cursorEnabled: true,
+      clickEnabled: false,
+    },
+  },
+  {
+    id: 43,
+    name: 'PinkFairy',
+    category: 'Fantasy',
+    description: 'A magical pink fairy mascot full of charm.',
+    emoji: '🧚',
+    color: '#FFA7D1',
+    tag: 'New',
+    assets: {
+      directions: '/mascots/avatars/pink-fairy-directions.png',
+    },
+    interaction: {
+      cursorEnabled: true,
+      clickEnabled: false,
+    },
+  },
+  {
+    id: 44,
+    name: 'LightHead',
+    category: 'Character',
+    description: 'A bright and playful character with a light-inspired design.',
+    emoji: '💡',
+    color: '#FFF300',
+    tag: 'New',
+    assets: {
+      directions: '/mascots/avatars/light-head-directions.png',
+    },
+    interaction: {
+      cursorEnabled: true,
+      clickEnabled: false,
+    },
+  },
+  {
+    id: 45,
+    name: 'SponkyCat',
+    category: 'Animal',
+    description: 'A quirky and playful cat mascot.',
+    emoji: '🐱',
+    color: '#FFBC9F',
+    tag: 'New',
+    assets: {
+      directions: '/mascots/avatars/sponky-cat-directions.png',
+    },
+    interaction: {
+      cursorEnabled: true,
+      clickEnabled: false,
+    },
+  },
+  {
+    id: 46,
+    name: 'LilyFairy',
+    category: 'Fantasy',
+    description: 'A graceful fairy mascot inspired by flowers and magic.',
+    emoji: '🌸',
+    color: '#E3AEFF',
+    tag: 'New',
+    assets: {
+      directions: '/mascots/avatars/lily-fairy-directions.png',
+    },
+    interaction: {
+      cursorEnabled: true,
+      clickEnabled: false,
+    },
+  },
+  {
+    id: 47,
+    name: 'LavaBlaze',
+    category: 'Fantasy',
+    description: 'A fiery mascot inspired by blazing lava.',
+    emoji: '🔥',
+    color: '#FF9D98',
+    tag: 'New',
+    assets: {
+      directions: '/mascots/avatars/lava-blaze-directions.png',
+    },
+    interaction: {
+      cursorEnabled: true,
+      clickEnabled: false,
+    },
+  },
+  {
+    id: 48,
+    name: 'RookyCat',
+    category: 'Animal',
+    description: 'A cute cat mascot with a distinctive personality.',
+    emoji: '🐈',
+    color: '#9CF3AF',
+    tag: 'New',
+    assets: {
+      directions: '/mascots/avatars/rooky-cat-directions.png',
+    },
+    interaction: {
+      cursorEnabled: true,
+      clickEnabled: false,
+    },
+  },
+  {
+    id: 49,
+    name: 'DevilMagician',
+    category: 'Fantasy',
+    description: 'A mysterious magician mascot with a devilish twist.',
+    emoji: '🪄',
+    color: '#C59AFF',
+    tag: 'New',
+    assets: {
+      directions: '/mascots/avatars/devil-magician-directions.png',
+    },
+    interaction: {
+      cursorEnabled: true,
+      clickEnabled: false,
+    },
+  },
+  {
+    id: 50,
+    name: 'King',
+    category: 'Character',
+    description: 'A royal mascot with a bold and majestic personality.',
+    emoji: '👑',
+    color: '#FFE280',
+    tag: 'New',
+    assets: {
+      directions: '/mascots/avatars/king-directions.png',
+    },
+    interaction: {
+      cursorEnabled: true,
+      clickEnabled: false,
+    },
+  },
+  {
+    id: 51,
+    name: 'AudioFire',
+    category: 'Technology',
+    description: 'A sound-inspired mascot with an energetic fiery style.',
+    emoji: '🎧',
+    color: '#FFA580',
+    tag: 'New',
+    assets: {
+      directions: '/mascots/avatars/audio-fire-directions.png',
+    },
+    interaction: {
+      cursorEnabled: true,
+      clickEnabled: false,
+    },
+  },
+  {
+    id: 52,
+    name: 'Knight',
+    category: 'Warrior',
+    description: 'A brave knight mascot ready for adventure.',
+    emoji: '🛡️',
+    color: '#9CBDFF',
+    tag: 'New',
+    assets: {
+      directions: '/mascots/avatars/knight-directions.png',
+    },
+    interaction: {
+      cursorEnabled: true,
+      clickEnabled: false,
+    },
+  },
+  {
+    id: 53,
+    name: 'LightBot',
+    category: 'Robot',
+    description: 'A friendly robot mascot with a bright personality.',
+    emoji: '🤖',
+    color: '#80F2D4',
+    tag: 'New',
+    assets: {
+      directions: '/mascots/avatars/light-bot-directions.png',
+    },
+    interaction: {
+      cursorEnabled: true,
+      clickEnabled: false,
+    },
+  },
+
 ];
 
 export default mascots;
