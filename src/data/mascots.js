@@ -644,7 +644,22 @@ const mascots = [
       clickEnabled: false,
     },
   },
-
+ {
+    id: 53,
+    name: 'Candybot',
+    category: 'Robot',
+    description: 'A friendly robot mascot with a candy like personality.',
+    emoji: '🤖',
+    color: '#B7C9A8',
+    tag: 'New',
+    assets: {
+      directions: '/mascots/avatars/candy-bot-directions.png',
+    },
+    interaction: {
+      cursorEnabled: true,
+      clickEnabled: false,
+    },
+  },
 ];
 
 export default mascots;
